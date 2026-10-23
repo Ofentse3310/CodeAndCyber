@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/java-projects/prime-number-checker/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/java-projects/student-management/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/java-projects/clinic-management-system/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
