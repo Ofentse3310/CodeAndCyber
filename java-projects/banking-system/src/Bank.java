@@ -1,4 +1,3 @@
-package bankingSystem;
 
 import java.util.Scanner;
 
