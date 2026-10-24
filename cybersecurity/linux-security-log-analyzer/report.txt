@@ -1,0 +1,20 @@
+LINUX SECURITY LOG ANALYSIS
+Project: Security Log Analyzer
+Data source: Synthetic sample authentication logs
+
+FINDGSINGS
+1. Five failed login events were recorded.
+2. IP address 192.168.1.50 generated three failed attempts for the admin account.
+3. IP address 192.168.1.60 generated two failed attempts for the student account.
+4. The logs also contain successful login events.
+
+ASSESSMENT
+Repeated failed login attempts may indicate suspicious activity, but the available sample records are not enough to confirm an attack.
+
+RECOMMENDED NEXT STEPS
+-Review related events and timestamps.
+-Check whether the activity is expected.
+-Investigate additional evidence before drawing conclusions.
+
+NOTE
+All records in this exercise are synthetic and were created for learning.
