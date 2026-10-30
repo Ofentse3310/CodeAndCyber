@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Leave Management</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 30px auto; padding: 0 15px; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 25px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f0f0f0; }
+        .msg { background: #e6f7e6; padding: 10px; margin-bottom: 15px; }
+        .err { background: #fde8e8; padding: 10px; margin-bottom: 15px; }
+        form.inline { display: inline; }
+        label { display: block; margin-top: 10px; }
+    </style>
+</head>
+<body>
+<h1>Leave Management</h1>
+<p>Logged in as <b th:text="${user.name}"></b> (<span th:text="${user.role}"></span>)</p>
+<form th:action="@{/logout}" method="post"><button type="submit">Log out</button></form>
+
+<div class="msg" th:if="${message}" th:text="${message}"></div>
+<div class="err" th:if="${error}" th:text="${error}"></div>
+
+<h2>My leave balances</h2>
+<table>
+    <tr><th>Leave type</th><th>Days remaining</th></tr>
+    <tr th:each="b : ${balances}">
+        <td th:text="${b.leaveType.name}"></td>
+        <td th:text="${b.daysRemaining}"></td>
+    </tr>
+</table>
+
+<h2>Request leave</h2>
+<form th:action="@{/leave/request}" method="post">
+    <label>Leave type
+        <select name="leaveTypeId" required>
+            <option th:each="t : ${leaveTypes}" th:value="${t.id}" th:text="${t.name}"></option>
+        </select>
+    </label>
+    <label>Start date <input type="date" name="startDate" required></label>
+    <label>End date <input type="date" name="endDate" required></label>
+    <label>Reason <input type="text" name="reason" maxlength="200"></label>
+    <br><button type="submit">Submit request</button>
+</form>
+
+<h2>My requests</h2>
+<table>
+    <tr><th>Type</th><th>From</th><th>To</th><th>Status</th><th>Manager comment</th></tr>
+    <tr th:each="r : ${requests}">
+        <td th:text="${r.leaveType.name}"></td>
+        <td th:text="${r.startDate}"></td>
+        <td th:text="${r.endDate}"></td>
+        <td th:text="${r.status}"></td>
+        <td th:text="${r.managerComment}"></td>
+    </tr>
+</table>
+
+<div th:if="${pending != null}">
+    <h2>Pending approvals</h2>
+    <table>
+        <tr><th>Employee</th><th>Type</th><th>From</th><th>To</th><th>Reason</th><th>Decision</th></tr>
+        <tr th:each="r : ${pending}">
+            <td th:text="${r.user.name}"></td>
+            <td th:text="${r.leaveType.name}"></td>
+            <td th:text="${r.startDate}"></td>
+            <td th:text="${r.endDate}"></td>
+            <td th:text="${r.reason}"></td>
+            <td>
+                <form class="inline" th:action="@{/leave/{id}/approve(id=${r.id})}" method="post">
+                    <input type="text" name="comment" placeholder="Comment">
+                    <button type="submit">Approve</button>
+                </form>
+                <form class="inline" th:action="@{/leave/{id}/reject(id=${r.id})}" method="post">
+                    <input type="hidden" name="comment" value="Rejected">
+                    <button type="submit">Reject</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
